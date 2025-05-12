@@ -8,10 +8,16 @@ function TelaInicial() {
     navigate("/Ranking");
   };
 
+  const GoScreenGame = () => {
+    navigate("/Game");
+  };
+
   return (
     <div className="container">
       <div className="botoes">
-        <button className="btnJogar">Iniciar</button>
+        <button onClick={GoScreenGame} className="btnJogar">
+          Iniciar
+        </button>
         <button onClick={GoScreenRanking} className="btnRanking">
           Ver ranking
         </button>

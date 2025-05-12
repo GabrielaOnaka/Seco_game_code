@@ -1,0 +1,69 @@
+.container_Game {
+  width: 100%;
+  height: 100dvh;
+  background-color: #aed1ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5rem;
+}
+
+.container_Game > button {
+  width: 200px;
+  font-size: 25px;
+}
+
+.game_selected_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.game_selected_item h1 {
+  font-size: 2rem;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.game_selected_item img {
+  width: 15rem;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+.game__lixeiras {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.game__lixeira {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  height: 13rem;
+  padding: 1rem;
+  background-color: transparent;
+  border: 0;
+}
+
+.game__lixeira:hover {
+  filter: brightness(0.9);
+}
+
+.game__lixeira:active {
+  filter: brightness(0.8);
+}
+
+.game__lixeira img {
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.game__lixeira p {
+  text-transform: capitalize;
+  font-size: 1.5rem;
+  text-wrap: nowrap;
+}
