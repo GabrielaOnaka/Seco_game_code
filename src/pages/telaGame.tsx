@@ -65,7 +65,10 @@ function Game() {
         <>
           <h1>Pontuação: {score}</h1>
           <div className="game_selected_item">
-            <img src={getImage(selectedItem.name)} alt="aaa" />
+            <img
+              src={getImage(selectedItem.name)}
+              alt={`${selectedItem.name} image`}
+            />
             <h1>Item: {selectedItem.name.replace(/_/g, " ")}</h1>
           </div>
 
