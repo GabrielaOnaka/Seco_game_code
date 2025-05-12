@@ -1,8 +1,22 @@
-.container_ranking{
+.container_ranking {
     width: 100%;
     height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #aed1ff;
+
 }
 
-h1{
+.ranking_titulo {
     color: black;
+    margin-bottom: 2rem;
+}
+
+.ranking_item {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    margin-bottom: 1rem;
 }
