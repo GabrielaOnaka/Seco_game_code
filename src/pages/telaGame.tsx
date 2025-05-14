@@ -55,7 +55,14 @@ function Game() {
   }, []);
 
   const selectLixeira = (lixeira: string, categoria_item: string) => {
-    if (lixeira === categoria_item) setScore(score + 1);
+    if (lixeira === categoria_item) {
+      setScore(score + 1);
+      fetch("http://localhost:8000/score?nome=Jogador&score=1", {
+        method: "POST"
+      }).catch((err) => {
+        console.error("Erro ao salvar ponto:", err);
+      });
+    }    
 
     const nextCounter = counter + 1;
     setCounter(nextCounter);
