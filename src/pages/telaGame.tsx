@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./../styles/telaGame.css";
 import { getImage } from "../functions/getImage";
 import LixeiraPlastico from "./../assets/lixeira/lixo_vermelho.png";
@@ -10,6 +10,7 @@ import LixeiraPilha from "./../assets/lixeira/lixo_pilha.png";
 import LixeiraEletronico from "./../assets/lixeira/lixo_eletronico.png";
 import LixeiraNaoReciclavel from "./../assets/lixeira/lixo_nao_reciclavel.png";
 import Spinner from "../components/Spinner/Spinner";
+import axios from "axios";
 
 interface Item {
   name: string;
@@ -41,6 +42,17 @@ function Game() {
     itemList[0]
   );
   const [counter, setCounter] = useState<number>(0);
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/sorteio")
+      .then((res) => {
+        setItemList(res.data);
+        setSelectedItem(res.data[0]);
+      })
+      .catch((err) => {
+        console.error("Erro ao carregar itens do backend:", err);
+      });
+  }, []);
 
   const selectLixeira = (lixeira: string, categoria_item: string) => {
     if (lixeira === categoria_item) setScore(score + 1);
