@@ -51,40 +51,24 @@ function Game() {
   }, []);
 
   const selectLixeira = (lixeira: string, categoria_item: string) => {
-    if (lixeira === categoria_item) {
-      setScore(score + 1);
-      fetch("http://localhost:8000/score?nome=Jogador&score=1", {
-        method: "POST",
-      }).catch((err) => {
-        console.error("Erro ao salvar ponto:", err);
-      });
-    }
+    if (lixeira === categoria_item) setScore(score + 1);
 
     const nextCounter = counter + 1;
     setCounter(nextCounter);
 
-    if (nextCounter >= itemList.length) {
-      setIsModalOpen(true);
-    } else {
-      setSelectedItem(itemList[nextCounter]);
-    }
+    if (nextCounter >= itemList.length) setIsModalOpen(true);
+    else setSelectedItem(itemList[nextCounter]);
   };
 
   const saveGame = (userName: string) => {
     fetch("http://localhost:8000/score", {
       method: "POST",
       body: JSON.stringify({ nome: userName, score }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log("Pontuação salva com sucesso:", data);
-      })
-      .catch((err) => {
-        console.error("Erro ao salvar pontuação:", err);
-      });
+      .then((data) => console.log("Pontuação salva com sucesso:", data))
+      .catch((err) => console.error("Erro ao salvar pontuação:", err));
     setScore(0);
     setCounter(0);
     setItemList([]);
