@@ -1,16 +1,16 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-import "./../styles/telaGame.css";
+import Spinner from "../components/Spinner/Spinner";
 import { getImage } from "../functions/getImage";
-import LixeiraPlastico from "./../assets/lixeira/lixo_vermelho.png";
-import LixeiraVidro from "./../assets/lixeira/lixo_verde.png";
 import LixeiraMetal from "./../assets/lixeira/lixo_amarelo.png";
-import LixeiraOrganico from "./../assets/lixeira/lixo_organico.png";
 import LixeiraPapel from "./../assets/lixeira/lixo_azul.png";
-import LixeiraPilha from "./../assets/lixeira/lixo_pilha.png";
 import LixeiraEletronico from "./../assets/lixeira/lixo_eletronico.png";
 import LixeiraNaoReciclavel from "./../assets/lixeira/lixo_nao_reciclavel.png";
-import Spinner from "../components/Spinner/Spinner";
-import axios from "axios";
+import LixeiraOrganico from "./../assets/lixeira/lixo_organico.png";
+import LixeiraPilha from "./../assets/lixeira/lixo_pilha.png";
+import LixeiraVidro from "./../assets/lixeira/lixo_verde.png";
+import LixeiraPlastico from "./../assets/lixeira/lixo_vermelho.png";
+import "./../styles/telaGame.css";
 
 interface Item {
   name: string;
@@ -29,6 +29,8 @@ const binList = [
 ];
 
 function Game() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userName, setUserName] = useState("");
   const [score, setScore] = useState(0);
   const [itemList, setItemList] = useState<Item[]>([]);
   const [counter, setCounter] = useState<number>(0);
@@ -62,20 +64,59 @@ function Game() {
     setCounter(nextCounter);
 
     if (nextCounter >= itemList.length) {
-      alert("Você ganhou!");
-      setScore(0);
-      setCounter(0);
-      setItemList([]);
-      setSelectedItem(undefined);
+      setIsModalOpen(true);
     } else {
       setSelectedItem(itemList[nextCounter]);
     }
+  };
+
+  const saveGame = (userName: string) => {
+    fetch("http://localhost:8000/score", {
+      method: "POST",
+      body: JSON.stringify({ nome: userName, score }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Pontuação salva com sucesso:", data);
+      })
+      .catch((err) => {
+        console.error("Erro ao salvar pontuação:", err);
+      });
+    setScore(0);
+    setCounter(0);
+    setItemList([]);
+    setIsModalOpen(false);
+    setSelectedItem(undefined);
   };
 
   return (
     <div className="container_Game">
       {selectedItem ? (
         <>
+          {isModalOpen && (
+            <div className="modal">
+              <div className="modal_content">
+                <h1>Você fez {score} pontos!</h1>
+                <h2>Insira seu nome para salvar sua pontuação</h2>
+                <input
+                  type="text"
+                  onChange={(e) => setUserName(e.target.value)}
+                />
+                <div className="buttons">
+                  <a className="button" href="/">
+                    Cancelar
+                  </a>
+                  <button className="button" onClick={() => saveGame(userName)}>
+                    Salvar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           <h1>Pontuação: {score}</h1>
           <div className="game_selected_item">
             <img
