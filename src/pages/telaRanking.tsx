@@ -30,10 +30,11 @@ function Ranking() {
         <div className="container_ranking">
             <h1 className='ranking_titulo'>Ranking</h1>
             <div>
-                {ranking.map((item: RankingItem) => (
+                {ranking.map((item: RankingItem, index: number) => (
                     <div className='ranking_item'>
+                        <h1>{index + 1}.</h1>
                         <h1>{item.nome}</h1>
-                        <h1>{item.score}</h1>
+                        <h1>{item.score} pontos</h1>
                     </div>
                 ))}
             </div>
