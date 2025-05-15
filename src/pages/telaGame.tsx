@@ -17,13 +17,6 @@ interface Item {
   category: string;
 }
 
-const data: Item[] = [
-  { name: "banana", category: "organico" },
-  { name: "lata_refrigerante", category: "metal" },
-  { name: "garrafa_pet_1", category: "plastico" },
-  { name: "pilha", category: "pilha" },
-];
-
 const binList = [
   { name: "organico", img: LixeiraOrganico },
   { name: "metal", img: LixeiraMetal },
@@ -37,14 +30,15 @@ const binList = [
 
 function Game() {
   const [score, setScore] = useState(0);
-  const [itemList, setItemList] = useState<Item[]>(data || []);
+  const [itemList, setItemList] = useState<Item[]>([]);
+  const [counter, setCounter] = useState<number>(0);
   const [selectedItem, setSelectedItem] = useState<Item | undefined>(
     itemList[0]
   );
-  const [counter, setCounter] = useState<number>(0);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/sorteio")
+    axios
+      .get("http://localhost:8000/sorteio")
       .then((res) => {
         setItemList(res.data);
         setSelectedItem(res.data[0]);
@@ -58,11 +52,11 @@ function Game() {
     if (lixeira === categoria_item) {
       setScore(score + 1);
       fetch("http://localhost:8000/score?nome=Jogador&score=1", {
-        method: "POST"
+        method: "POST",
       }).catch((err) => {
         console.error("Erro ao salvar ponto:", err);
       });
-    }    
+    }
 
     const nextCounter = counter + 1;
     setCounter(nextCounter);
@@ -71,8 +65,8 @@ function Game() {
       alert("Você ganhou!");
       setScore(0);
       setCounter(0);
-      setItemList(data);
-      setSelectedItem(data[0]);
+      setItemList([]);
+      setSelectedItem(undefined);
     } else {
       setSelectedItem(itemList[nextCounter]);
     }
@@ -88,7 +82,13 @@ function Game() {
               src={getImage(selectedItem.name)}
               alt={`${selectedItem.name} image`}
             />
-            <h1>Item: {selectedItem.name.replace(/_/g, " ")}</h1>
+            <h1>
+              Item:{" "}
+              {selectedItem.name
+                .replace(/_/g, " ")
+                .replace("1", "")
+                .replace("2", "")}
+            </h1>
           </div>
 
           <div className="game__lixeiras">
