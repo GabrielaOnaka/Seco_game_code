@@ -61,11 +61,15 @@ function Game() {
   };
 
   const saveGame = (userName: string) => {
-    fetch("http://localhost:8000/score", {
-      method: "POST",
-      body: JSON.stringify({ nome: userName, score }),
-      headers: { "Content-Type": "application/json" },
-    })
+    fetch(
+      `http://localhost:8000/score?nome=${encodeURIComponent(
+        userName
+      )}&score=${encodeURIComponent(score)}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
       .then((res) => res.json())
       .then((data) => console.log("Pontuação salva com sucesso:", data))
       .catch((err) => console.error("Erro ao salvar pontuação:", err));
@@ -74,6 +78,7 @@ function Game() {
     setItemList([]);
     setIsModalOpen(false);
     setSelectedItem(undefined);
+    window.location.href = "/";
   };
 
   return (
