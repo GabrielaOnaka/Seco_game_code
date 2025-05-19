@@ -69,7 +69,6 @@
   text-wrap: nowrap;
 }
 
-/** Modal */
 .modal {
   position: fixed;
   top: 0;
@@ -145,7 +144,7 @@
 
 .btn_voltar {
   margin-bottom: 1.5rem;
-  background-color: #0078ff; /* azul que combina com fundo */
+  background-color: #0078ff; 
   border: 2px solid #0078ff;
   color: white;
   font-weight: bold;
@@ -157,7 +156,6 @@
   font-size: 1.2rem;
 }
 
-/* Hover e foco: fundo transparente, borda azul e texto azul */
 .btn_voltar:hover,
 .btn_voltar:focus,
 .btn_voltar:active {

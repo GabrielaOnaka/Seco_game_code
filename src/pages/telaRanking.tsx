@@ -15,7 +15,7 @@ function Ranking() {
     const [ranking, setRanking] = useState<RankingItem[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const navigate = useNavigate();  // <-- cria o hook de navegação
+    const navigate = useNavigate();  
 
     useEffect(() => {
         console.log("entrou useEffect");

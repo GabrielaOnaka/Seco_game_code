@@ -113,7 +113,6 @@ function Game() {
 
           <h1>Pontuação: {score}</h1>
 
-          {/* Botão para voltar à página inicial */}
           <button onClick={goToHome} className="btn_voltar">
             ← Voltar
           </button>

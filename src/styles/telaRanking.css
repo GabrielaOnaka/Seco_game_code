@@ -1,37 +1,32 @@
-/* Resetando margens e preenchimentos padrão */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Garantindo que o html e o body ocupem 100% da altura e largura da tela */
 html, body {
     height: 100%;
     width: 100%;
 }
 
-/* Estilos do container de ranking */
 .container_ranking {
     width: 100%;
-    min-height: 100vh; /* Garantir que o container ocupe toda a altura da tela */
+    min-height: 100vh; 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: #aed1ff;
     padding: 2rem;
-    font-family: 'Orbitron', sans-serif; /* fonte digital */
+    font-family: 'Orbitron', sans-serif; 
 }
 
-/* TÍTULO FUTURISTA */
 .ranking_titulo {
     color: black;
     font-size: 2.5rem;
     margin-bottom: 2rem;
 }
 
-/* ITEM DO RANKING */
 .ranking_item {
     display: flex;
     gap: 2rem;
@@ -46,7 +41,7 @@ html, body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: fadeInUp 0.6s ease forwards;
     opacity: 0;
-    cursor: pointer; /* opcional */
+    cursor: pointer; 
 }
 
 .ranking_item:hover {
@@ -54,7 +49,6 @@ html, body {
     box-shadow: 0 0 20px #00ffe7aa;
 }
 
-/* TROFÉUS */
 .trofeu {
     width: 48px;
     height: 48px;
@@ -62,7 +56,6 @@ html, body {
     filter: drop-shadow(0 0 5px #fff);
 }
 
-/* AVATAR */
 .ranking_avatar_nome {
     display: flex;
     align-items: center;
@@ -83,7 +76,6 @@ html, body {
     box-shadow: 0 0 8px #00ffe7;
 }
 
-/* SCORE + BARRA */
 .ranking_score_barra {
     display: flex;
     flex-direction: column;
@@ -107,7 +99,6 @@ html, body {
     transition: width 0.4s ease;
 }
 
-/* ANIMAÇÃO */
 @keyframes fadeInUp {
     0% {
         opacity: 0;
@@ -119,11 +110,10 @@ html, body {
     }
 }
 
-/* BOTÃO VOLTAR */
 .btn_voltar {
-    margin: 0; /* Remover qualquer margem extra */
+    margin: 0; 
     margin-bottom: 1.5rem;
-    background-color: #0078ff;   /* azul que combina com fundo */
+    background-color: #0078ff;   
     border: 2px solid #0078ff;
     color: white;
     font-weight: bold;
@@ -135,7 +125,6 @@ html, body {
     font-size: 1.2rem;
 }
 
-/* Hover e foco: fundo transparente, borda azul e texto azul */
 .btn_voltar:hover,
 .btn_voltar:focus,
 .btn_voltar:active {
