@@ -1,22 +1,146 @@
+/* Resetando margens e preenchimentos padrão */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Garantindo que o html e o body ocupem 100% da altura e largura da tela */
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+/* Estilos do container de ranking */
 .container_ranking {
     width: 100%;
-    height: 100dvh;
+    min-height: 100vh; /* Garantir que o container ocupe toda a altura da tela */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: #aed1ff;
-
+    padding: 2rem;
+    font-family: 'Orbitron', sans-serif; /* fonte digital */
 }
 
+/* TÍTULO FUTURISTA */
 .ranking_titulo {
     color: black;
+    font-size: 2.5rem;
     margin-bottom: 2rem;
 }
 
+/* ITEM DO RANKING */
 .ranking_item {
     display: flex;
     gap: 2rem;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 1rem;
+    background: rgba(0, 0, 0, 0.15);
+    padding: 1rem 2rem;
+    border-radius: 16px;
+    border: 1px solid #00ffe7;
+    box-shadow: 0 0 12px #00ffe750;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+    cursor: pointer; /* opcional */
+}
+
+.ranking_item:hover {
+    transform: translateX(5px) rotate(5deg);
+    box-shadow: 0 0 20px #00ffe7aa;
+}
+
+/* TROFÉUS */
+.trofeu {
+    width: 48px;
+    height: 48px;
+    margin-left: 0.5rem;
+    filter: drop-shadow(0 0 5px #fff);
+}
+
+/* AVATAR */
+.ranking_avatar_nome {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.avatar_placeholder {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(45deg, #00ffe7, #0078ff);
+    color: black;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 0 8px #00ffe7;
+}
+
+/* SCORE + BARRA */
+.ranking_score_barra {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    color: #000;
+}
+
+.barra_progresso {
+    width: 100%;
+    height: 8px;
+    background-color: #333;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+    box-shadow: 0 0 4px #00ffe7aa;
+}
+
+.barra_preenchida {
+    height: 100%;
+    background: linear-gradient(to right, #00ffe7, #0078ff);
+    transition: width 0.4s ease;
+}
+
+/* ANIMAÇÃO */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* BOTÃO VOLTAR */
+.btn_voltar {
+    margin: 0; /* Remover qualquer margem extra */
+    margin-bottom: 1.5rem;
+    background-color: #0078ff;   /* azul que combina com fundo */
+    border: 2px solid #0078ff;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+}
+
+/* Hover e foco: fundo transparente, borda azul e texto azul */
+.btn_voltar:hover,
+.btn_voltar:focus,
+.btn_voltar:active {
+    background-color: transparent;
+    color: #0078ff;
+    border-color: #0078ff;
+    outline: none;
 }

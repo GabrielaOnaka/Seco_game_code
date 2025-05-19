@@ -1,28 +1,21 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-import "./../styles/telaGame.css";
+import Spinner from "../components/Spinner/Spinner";
 import { getImage } from "../functions/getImage";
-import LixeiraPlastico from "./../assets/lixeira/lixo_vermelho.png";
-import LixeiraVidro from "./../assets/lixeira/lixo_verde.png";
 import LixeiraMetal from "./../assets/lixeira/lixo_amarelo.png";
-import LixeiraOrganico from "./../assets/lixeira/lixo_organico.png";
 import LixeiraPapel from "./../assets/lixeira/lixo_azul.png";
-import LixeiraPilha from "./../assets/lixeira/lixo_pilha.png";
 import LixeiraEletronico from "./../assets/lixeira/lixo_eletronico.png";
 import LixeiraNaoReciclavel from "./../assets/lixeira/lixo_nao_reciclavel.png";
-import Spinner from "../components/Spinner/Spinner";
-import axios from "axios";
+import LixeiraOrganico from "./../assets/lixeira/lixo_organico.png";
+import LixeiraPilha from "./../assets/lixeira/lixo_pilha.png";
+import LixeiraVidro from "./../assets/lixeira/lixo_verde.png";
+import LixeiraPlastico from "./../assets/lixeira/lixo_vermelho.png";
+import "./../styles/telaGame.css";
 
 interface Item {
   name: string;
   category: string;
 }
-
-const data: Item[] = [
-  { name: "banana", category: "organico" },
-  { name: "lata_refrigerante", category: "metal" },
-  { name: "garrafa_pet_1", category: "plastico" },
-  { name: "pilha", category: "pilha" },
-];
 
 const binList = [
   { name: "organico", img: LixeiraOrganico },
@@ -36,15 +29,18 @@ const binList = [
 ];
 
 function Game() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userName, setUserName] = useState("");
   const [score, setScore] = useState(0);
-  const [itemList, setItemList] = useState<Item[]>(data || []);
+  const [itemList, setItemList] = useState<Item[]>([]);
+  const [counter, setCounter] = useState<number>(0);
   const [selectedItem, setSelectedItem] = useState<Item | undefined>(
     itemList[0]
   );
-  const [counter, setCounter] = useState<number>(0);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/sorteio")
+    axios
+      .get("http://localhost:8000/sorteio")
       .then((res) => {
         setItemList(res.data);
         setSelectedItem(res.data[0]);
@@ -55,40 +51,85 @@ function Game() {
   }, []);
 
   const selectLixeira = (lixeira: string, categoria_item: string) => {
-    if (lixeira === categoria_item) {
-      setScore(score + 1);
-      fetch("http://localhost:8000/score?nome=Jogador&score=1", {
-        method: "POST"
-      }).catch((err) => {
-        console.error("Erro ao salvar ponto:", err);
-      });
-    }    
+    if (lixeira === categoria_item) setScore(score + 1);
 
     const nextCounter = counter + 1;
     setCounter(nextCounter);
 
-    if (nextCounter >= itemList.length) {
-      alert("Você ganhou!");
-      setScore(0);
-      setCounter(0);
-      setItemList(data);
-      setSelectedItem(data[0]);
-    } else {
-      setSelectedItem(itemList[nextCounter]);
-    }
+    if (nextCounter >= itemList.length) setIsModalOpen(true);
+    else setSelectedItem(itemList[nextCounter]);
+  };
+
+  const saveGame = (userName: string) => {
+    fetch(
+      `http://localhost:8000/score?nome=${encodeURIComponent(
+        userName
+      )}&score=${encodeURIComponent(score)}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => console.log("Pontuação salva com sucesso:", data))
+      .catch((err) => console.error("Erro ao salvar pontuação:", err));
+    setScore(0);
+    setCounter(0);
+    setItemList([]);
+    setIsModalOpen(false);
+    setSelectedItem(undefined);
+    window.location.href = "/";
+  };
+
+  // Função para voltar à página inicial
+  const goToHome = () => {
+    window.location.href = "/";
   };
 
   return (
     <div className="container_Game">
       {selectedItem ? (
         <>
+          {isModalOpen && (
+            <div className="modal">
+              <div className="modal_content">
+                <h1>Você fez {score} pontos!</h1>
+                <h2>Insira seu nome para salvar sua pontuação</h2>
+                <input
+                  type="text"
+                  onChange={(e) => setUserName(e.target.value)}
+                />
+                <div className="buttons">
+                  <a className="button" href="/">
+                    Cancelar
+                  </a>
+                  <button className="button" onClick={() => saveGame(userName)}>
+                    Salvar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           <h1>Pontuação: {score}</h1>
+
+          {/* Botão para voltar à página inicial */}
+          <button onClick={goToHome} className="btn_voltar">
+            ← Voltar
+          </button>
+
           <div className="game_selected_item">
             <img
               src={getImage(selectedItem.name)}
               alt={`${selectedItem.name} image`}
             />
-            <h1>Item: {selectedItem.name.replace(/_/g, " ")}</h1>
+            <h1>
+              Item:{" "}
+              {selectedItem.name
+                .replace(/_/g, " ")
+                .replace("1", "")
+                .replace("2", "")}
+            </h1>
           </div>
 
           <div className="game__lixeiras">
