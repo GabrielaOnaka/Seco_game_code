@@ -35,7 +35,6 @@ function Ranking() {
         <div className="container_ranking">
             <h1 className='ranking_titulo'>Ranking</h1>
 
-            {/* Botão de voltar */}
             <button className="btn_voltar" onClick={() => navigate('/')}>
                 ← Voltar
             </button>
