@@ -60,6 +60,7 @@ html, body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    width: 15rem;
 }
 
 .avatar_placeholder {
@@ -77,6 +78,7 @@ html, body {
 }
 
 .ranking_score_barra {
+    width: 15rem;
     display: flex;
     flex-direction: column;
     align-items: flex-end;

@@ -96,6 +96,7 @@ function Game() {
                 <h1>Você fez {score} pontos!</h1>
                 <h2>Insira seu nome para salvar sua pontuação</h2>
                 <input
+                  placeholder="Digite seu nome"
                   type="text"
                   onChange={(e) => setUserName(e.target.value)}
                 />
